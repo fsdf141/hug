@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>給最棒的你 🌟</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #4a4a4a;
+            overflow-x: hidden;
+            text-align: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 30px 20px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.5);
+            width: 100%;
+            max-width: 360px;
+            transition: all 0.3s ease;
+        }
+        h1 {
+            font-size: 24px;
+            color: #ff4d6d;
+            margin-bottom: 15px;
+        }
+        .avatar {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        #quote-box {
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 20px 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+        .btn {
+            background: linear-gradient(90deg, #ff758f, #ff4d6d);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+            width: 100%;
+            margin-bottom: 15px;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px rgba(255, 77, 109, 0.4);
+        }
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            animation: fly 2s linear forwards;
+            pointer-events: none;
+            z-index: 999;
+        }
+        @keyframes fly {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+        }
+        .footer-text {
+            font-size: 12px;
+            color: #a3a3a3;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="avatar">hug</div>
+        <h1>聽說你今天有點累？</h1>
+        
+        <div id="quote-box">無論發生什麼事，我都會陪著你。點點下方按鈕，把難過交給我吧！</div>
+        
+        <button class="btn" onclick="cheerUp()">🛸 點擊提煉悲傷</button>
+        <button class="btn" style="background: #ffb3c1; box-shadow: none;" onclick="giveHug()">🧸 點這裡抱一個</button>
+        
+        <p class="footer-text">這是一個只為你存在的充電站</p>
+    </div>
+
+    <script>
+        const quotes = [
+            "✨ 沒關係的，你已經表現得很好，做的很棒了，辛苦你啦！",
+            "🍦 難過的時候，身上的脂肪會變成防禦力，所以想吃什麼就去吃吧！",
+            "☁️ 烏雲總會散去的，散去之後，你依然是那個最閃耀的星星。",
+            "🐱 呼呼！痛痛飛走了！不管生什麼氣，我都站你這邊。",
+            "❤️ 雖然我不知道怎麼完美地解決你的煩惱，但我知道我會一直陪著你。",
+            "🐾 地球上有幾十億人，但現在我最在乎的就是你的心情。",
+            "🌟 給自己放個假吧，允許自己今天只是一隻什麼都不想做的軟爛貓咪。",
+            "🕊️ 世界可能很不溫柔，但我會永遠當你的避風港。",
+            "💝 摸摸你的小腦袋，不哭不哭，壞運氣都被我趕跑了！",
+        ];
+
+        const emojis = ["❤️", "💖", "✨", "🌸", "⭐", "🦖", "🧸"];
+        
+        // 新增一個變數來記錄目前播到第幾句
+        let currentQuoteIndex = 0;
+
+        function cheerUp() {
+            // 照著順序換句子
+            const quoteBox = document.getElementById('quote-box');
+            quoteBox.innerHTML = quotes[currentQuoteIndex];
+            
+            // 遞增索引，並用餘數（%）在播完最後一句時重頭開始
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+
+            // 噴發愛心特效
+            for (let i = 0; i < 8; i++) {
+                createHeart();
+            }
+        }
+
+        function giveHug() {
+            const quoteBox = document.getElementById('quote-box');
+            quoteBox.innerHTML = "（緊緊抱住！）🫂<br>抱久一點，把力量都傳給你！";
+            document.querySelector('.avatar').innerHTML = "🥰";
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(createHeart, i * 50);
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            
+            // 隨機表情與位置
+            heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            heart.style.left = Math.random() * 80 + 10 + 'vw';
+            heart.style.top = '90vh';
+            // 隨機速度與大小
+            heart.style.animationDuration = Math.random() * 1.5 + 1 + 's';
+            
+            document.body.appendChild(heart);
+            
+            // 動畫結束後移除
+            setTimeout(() => {
+                heart.remove();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
